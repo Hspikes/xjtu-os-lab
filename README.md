@@ -6,7 +6,6 @@
 - `1lab/`：基础进程与线程实验，包含 `fork/exec/wait`、信号处理、互斥/信号量、简易自旋锁等示例，`res/` 为运行截图。
 - `2lab/`：进阶进程通信与内存管理实验，含 `kill` 信号、管道/锁、`alarm`、自旋锁与互斥、动态内存分配、FIFO/LRU 页面置换模拟器，`res/` 存放输出截图。
 - `3lab/`：内核模块、字符设备与系统调用表修改实验，详见 `3lab/README.md`。
-- `report.md` 与若干 `.docx`：实验报告/素材。
 
 ## 环境要求
 - Linux 开发环境，已安装 `gcc`/`make` 与 `pthread`/`semaphore` 相关头文件。
