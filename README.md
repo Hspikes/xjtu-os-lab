@@ -1,42 +1,52 @@
-# 操作系统实验仓库（os-lab）
+# Operating Systems Lab Portfolio
 
-记录 3 轮操作系统课程实验的代码与截图，覆盖用户态进程/线程练习、进程间通信、页面置换模拟，以及内核模块与系统调用表实验。主要语言为 C，Lab3 依赖 Linux 内核开发环境。
+[简体中文](README.zh-CN.md)
 
-## 目录速览
-- `1lab/`：基础进程与线程实验，包含 `fork/exec/wait`、信号处理、互斥/信号量、简易自旋锁等示例，`res/` 为运行截图。
-- `2lab/`：进阶进程通信与内存管理实验，含 `kill` 信号、管道/锁、`alarm`、自旋锁与互斥、动态内存分配、FIFO/LRU 页面置换模拟器，`res/` 存放输出截图。
-- `3lab/`：内核模块、字符设备与系统调用表修改实验，详见 `3lab/README.md`。
+This repository contains the code and result screenshots from three rounds of operating systems labs. The exercises cover user-space processes and threads, inter-process communication, page-replacement simulation, kernel modules, and system-call table modification. Most of the code is written in C, and Lab 3 requires a Linux kernel development environment.
 
-## 环境要求
-- Linux 开发环境，已安装 `gcc`/`make` 与 `pthread`/`semaphore` 相关头文件。
-- Lab3 需要匹配当前内核版本的头文件和 root 权限（加载/卸载模块）。
+## Directory Overview
 
-## 快速开始
-用户态实验可直接用 `gcc` 编译运行：
+- `1lab/`: introductory process and thread exercises using `fork`, `exec`, `wait`, signals, mutexes, semaphores, and a simple spinlock. Runtime screenshots are under `res/`.
+- `2lab/`: exercises in inter-process communication and memory management, including `kill`, pipes and locks, `alarm`, concurrent memory allocation, and FIFO/LRU page-replacement simulators. Runtime screenshots are under `res/`.
+- `3lab/`: kernel modules, a character device, and system-call table modification. See the [Lab 3 guide](3lab/README.md) for details.
+
+## Requirements
+
+- A Linux development environment with `gcc`, `make`, and the headers required by `pthread` and POSIX semaphores.
+- Lab 3 requires headers matching the running kernel and root privileges for loading and unloading modules.
+
+## Quick Start
+
+The user-space exercises can be compiled directly with `gcc`:
+
 ```bash
-# 进程/线程示例
+# Process and thread examples
 gcc 1lab/1/1-1.c -o 1lab/1/1-1
 gcc 1lab/2/2-2.c -o 1lab/2/2-2 -pthread
 ./1lab/2/2-2
 
-# 页面置换模拟器（FIFO/LRU）
+# FIFO/LRU page-replacement simulator
 gcc 2lab/4/4.c -o 2lab/4/4
 ./2lab/4/4
 ```
 
-内核实验请参考子目录内 Makefile：
+Use the Makefiles in the corresponding subdirectories for the kernel exercises:
+
 ```bash
-cd 3lab/hello_test    && make && sudo insmod mymodules.ko && sudo rmmod mymodules
-cd 3lab/dev           && make && sudo insmod glo_pro.ko   && sudo rmmod glo_pro
-cd 3lab/modify_syscall&& make && sudo insmod modify_syscall.ko p_sys_call_table=<addr> && sudo rmmod modify_syscall
+cd 3lab/hello_test     && make && sudo insmod mymodules.ko && sudo rmmod mymodules
+cd 3lab/dev            && make && sudo insmod glo_pro.ko   && sudo rmmod glo_pro
+cd 3lab/modify_syscall && make && sudo insmod modify_syscall.ko p_sys_call_table=<addr> && sudo rmmod modify_syscall
 ```
-> `p_sys_call_table` 需使用当前内核的实际地址，可通过 `/proc/kallsyms` 查询。更多细节见 `3lab/README.md`。
 
-## 实验小结
-- **Lab1**：关注进程创建/等待、父子进程信号、线程同步（互斥锁/信号量/自旋锁），理解基本并发与调度行为。
-- **Lab2**：深入信号/管道的同步与竞争、`alarm` 计时、进程/线程并发安全、动态内存与页面置换策略的实现与对比。
-- **Lab3**：完成可加载内核模块、字符设备消息队列、系统调用表替换与检查等高级实验，涵盖 CR0 写保护、等待队列、poll/epoll 支持等主题。
+> `p_sys_call_table` must be the actual address for the running kernel. It can be found through `/proc/kallsyms`. See the [Lab 3 guide](3lab/README.md) for details.
 
-## 参考资料
-- 各目录内的源码注释与 `res/` 截图可帮助理解运行效果。
-- Lab3 的完整步骤、问答与调试技巧见 `3lab/README.md`。***
+## Lab Summary
+
+- **Lab 1:** process creation and waiting, parent-child signaling, and thread synchronization with mutexes, semaphores, and a spinlock.
+- **Lab 2:** synchronization and races involving signals and pipes, `alarm` timers, process/thread safety, dynamic memory allocation, and implementations of FIFO and LRU page replacement.
+- **Lab 3:** loadable kernel modules, a character-device message queue, and system-call table replacement and inspection, including CR0 write protection, wait queues, and `poll`/`epoll` support.
+
+## Further Reading
+
+- Source comments and the screenshots under each `res/` directory show how the exercises behave at runtime.
+- Complete steps, review questions, and debugging notes for Lab 3 are in the [Lab 3 guide](3lab/README.md).
